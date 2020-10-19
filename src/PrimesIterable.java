@@ -1,10 +1,6 @@
-
-import java.util.Iterator;
-
 public class PrimesIterable implements Iterable<Integer> {
-
     @Override
-    public Iterator<Integer> iterator() {
+    public PrimesIterator iterator() {
         return new PrimesIterator();
     }
 }

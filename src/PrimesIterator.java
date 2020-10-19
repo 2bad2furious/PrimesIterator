@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class PrimesIterator implements Iterator<Integer> {
-
-    private List<Integer> primesCache = new ArrayList<>();
+    
+    private final List<Integer> primeCache = new ArrayList<>();
     private int i = 1;
 
     @Override
@@ -17,26 +17,19 @@ public class PrimesIterator implements Iterator<Integer> {
         do {
             i++;
         } while (!isPrime(i));
+        primeCache.add(i);
         return i;
     }
 
-    // 101 | 2,3,5,7,11,13,17,19,23,29,31
     private boolean isPrime(int i) {
-        //int sqroot = (int) Math.sqrt(i);
-        for (int j : primesCache) {
-            if (i % j == 0) {
-                return false;
-            }
+        int sqroot = (int) Math.sqrt(i);
+        /*for (int prime : primeCache) {
+            if (prime > sqroot) break;
+            if (i % prime == 0) return false;
         }
-        primesCache.add(i);
-        return true;
-    }
-
-
-    public static void main(String[] args) {
-        for (int prime : new PrimesIterable()) {
-            if (prime > 100) break;
-            System.out.println(prime);
-        }
+        return true;*/
+        return primeCache.stream()
+                .takeWhile(prime -> prime <= sqroot) // this works as long as the cache is sorted
+                .noneMatch(prime -> i % prime == 0);
     }
 }
